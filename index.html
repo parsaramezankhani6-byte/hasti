@@ -952,6 +952,83 @@
     #audio-btn:active { transform: scale(0.92); }
     #audio-btn svg { width: 20px; height: 20px; fill: white; }
 
+    /* GPU / layout helpers */
+    #main-scroll {
+      contain: layout paint;
+    }
+    .section-video,
+    .scratch-section,
+    .gallery-section,
+    .section-divider-overlay {
+      content-visibility: auto;
+      contain-intrinsic-size: 100vw 80vh;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    .section-video video,
+    .scratch-section video.bg-video,
+    .gallery-section video {
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+
+    /* موبایل: افکت‌های سنگین را کم کن */
+    @media (max-width: 820px), (hover: none) and (pointer: coarse) {
+      .seal-btn {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      .scratch-reveal,
+      .complete-overlay,
+      #audio-btn {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      .gallery-section .glow-orb {
+        display: none !important;
+      }
+      .photo-item::before {
+        animation: none !important;
+        opacity: 0 !important;
+      }
+      .photo-item {
+        animation: none !important;
+        filter: none !important;
+        transition: opacity 0.45s ease, transform 0.45s ease !important;
+      }
+      .photo-item:nth-child(n) {
+        animation: none !important;
+      }
+      .intro-glow {
+        animation: none !important;
+        opacity: 0.55;
+      }
+      .seal-ring,
+      .seal-icon,
+      .seal-btn {
+        animation: none !important;
+      }
+      .section-video .section-label,
+      .section-video .section-title,
+      .section-video .section-text-img,
+      .section-video .divider {
+        transition-duration: 0.35s !important;
+      }
+      .flower-particle {
+        will-change: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
     /* ===== FLOWER BURST ===== */
     .flower-burst-container {
       position: fixed;
@@ -996,7 +1073,7 @@
   <div id="app">
     <!-- ===== INTRO ===== -->
     <div id="intro">
-      <video id="intro-video" playsinline webkit-playsinline muted preload="auto" disablePictureInPicture>
+      <video id="intro-video" playsinline webkit-playsinline muted preload="metadata" disablePictureInPicture>
         <source src="images/IMG_3047_erasio.mp4" type="video/mp4">
       </video>
       <div class="intro-overlay"></div>
@@ -1025,24 +1102,24 @@
     <main id="main-scroll">
       <!-- SECTION 1: HELLO VIDEO -->
       <section class="section-video" id="sec-hello">
-        <video playsinline webkit-playsinline muted loop preload="auto" disablePictureInPicture>
+        <video playsinline webkit-playsinline muted loop preload="none" disablePictureInPicture>
           <source src="images/hello-bg.mp4" type="video/mp4">
         </video>
         <div class="content">
           <div class="section-text-img">
-            <img src="images/text.PNG" alt="متن نامه">
+            <img src="images/text.webp" alt="متن نامه" decoding="async" loading="eager" width="900" height="1037">
           </div>
         </div>
       </section>
 
       <!-- ===== OVERLAY DIVIDER 1 ===== -->
       <div class="section-divider-overlay" id="divider-1">
-        <img src="images/IMG_3080.PNG" alt="مرز تزئینی">
+        <img src="images/IMG_3080.webp" alt="مرز تزئینی" decoding="async" loading="lazy" width="900" height="300">
       </div>
 
       <!-- SECTION 2: SCRATCH WITH VIDEO BACKGROUND (ENHANCED) -->
       <section class="scratch-section" id="sec-scratch">
-        <video class="bg-video" playsinline webkit-playsinline muted loop preload="auto" disablePictureInPicture>
+        <video class="bg-video" playsinline webkit-playsinline muted loop preload="none" disablePictureInPicture>
           <source src="images/IMG_3079_erasio.mp4" type="video/mp4">
         </video>
         
@@ -1069,12 +1146,12 @@
 
       <!-- ===== OVERLAY DIVIDER 2 ===== -->
       <div class="section-divider-overlay" id="divider-2">
-        <img src="images/IMG_3080.PNG" alt="مرز تزئینی">
+        <img src="images/IMG_3080.webp" alt="مرز تزئینی" decoding="async" loading="lazy" width="900" height="300">
       </div>
 
       <!-- SECTION 3: PHOTO GALLERY ENHANCED -->
       <section class="gallery-section" id="sec-gallery">
-        <video playsinline webkit-playsinline muted loop preload="auto" disablePictureInPicture>
+        <video playsinline webkit-playsinline muted loop preload="none" disablePictureInPicture>
           <source src="images/photos.MP4" type="video/mp4">
         </video>
         
@@ -1085,16 +1162,16 @@
         <div class="content">
           <div class="gallery-grid">
             <div class="photo-item">
-              <img src="images/1.PNG" alt="عکس ۱">
+              <img src="images/1.webp" alt="عکس ۱" decoding="async" loading="lazy" width="900" height="1350">
             </div>
             <div class="photo-item">
-              <img src="images/2.PNG" alt="عکس ۲">
+              <img src="images/2.webp" alt="عکس ۲" decoding="async" loading="lazy" width="900" height="1350">
             </div>
             <div class="photo-item">
-              <img src="images/3.PNG" alt="عکس ۳">
+              <img src="images/3.webp" alt="عکس ۳" decoding="async" loading="lazy" width="900" height="1350">
             </div>
             <div class="photo-item">
-              <img src="images/4.PNG" alt="عکس ۴">
+              <img src="images/4.webp" alt="عکس ۴" decoding="async" loading="lazy" width="900" height="1350">
             </div>
           </div>
         </div>
@@ -1110,28 +1187,34 @@
     <svg id="icon-play" viewBox="0 0 24 24" style="display:none"><polygon points="5,3 19,12 5,21"/></svg>
   </button>
 
-  <audio id="bg-audio" loop preload="auto">
-    <source src="music/Timeless Grace.mp3" type="audio/mpeg">
+  <audio id="bg-audio" loop preload="metadata">
+    <source src="music/Timeless%20Grace.mp3" type="audio/mpeg">
   </audio>
 
   <script>
     (() => {
+      const IS_MOBILE = window.matchMedia('(max-width: 820px), (hover: none) and (pointer: coarse)').matches
+        || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const REDUCE_FX = IS_MOBILE || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
       // ---- Flower Burst ----
-      const flowers = ['🌸', '🌺', '🌷', '🌹', '🌸', '🌼', '🌸', '🌺', '🌸', '🌷'];
+      const flowers = ['🌸', '🌺', '🌷', '🌹', '🌼'];
       let lastFlowerTime = 0;
-      const FLOWER_INTERVAL = 40;
+      const FLOWER_INTERVAL = REDUCE_FX ? 110 : 40;
+      const FLOWER_COUNT_MAX = REDUCE_FX ? 2 : 4;
       
       function createSmallFlowerBurst(clientX, clientY) {
+        if (REDUCE_FX && Math.random() > 0.55) return;
         const container = document.getElementById('flowerBurstContainer');
-        const count = 2 + Math.floor(Math.random() * 3);
+        if (!container) return;
+        const count = 1 + Math.floor(Math.random() * FLOWER_COUNT_MAX);
         
         for (let i = 0; i < count; i++) {
           const el = document.createElement('div');
           el.className = 'flower-particle';
-          const flower = flowers[Math.floor(Math.random() * flowers.length)];
-          el.textContent = flower;
+          el.textContent = flowers[Math.floor(Math.random() * flowers.length)];
           
-          const size = 10 + Math.random() * 10;
+          const size = 10 + Math.random() * (REDUCE_FX ? 6 : 10);
           el.style.width = size + 'px';
           el.style.height = size + 'px';
           el.style.fontSize = size + 'px';
@@ -1140,22 +1223,13 @@
           
           const angle = Math.random() * Math.PI * 2;
           const distance = 15 + Math.random() * 35;
-          const tx = Math.cos(angle) * distance;
-          const ty = Math.sin(angle) * distance - 15;
-          const rotation = (Math.random() - 0.5) * 180;
-          
-          el.style.setProperty('--tx', tx + 'px');
-          el.style.setProperty('--ty', ty + 'px');
-          el.style.setProperty('--rot', rotation + 'deg');
-          
-          el.style.animationDelay = (Math.random() * 0.1) + 's';
-          el.style.animationDuration = (0.5 + Math.random() * 0.4) + 's';
+          el.style.setProperty('--tx', (Math.cos(angle) * distance) + 'px');
+          el.style.setProperty('--ty', (Math.sin(angle) * distance - 15) + 'px');
+          el.style.setProperty('--rot', ((Math.random() - 0.5) * 180) + 'deg');
+          el.style.animationDuration = (0.45 + Math.random() * 0.35) + 's';
           
           container.appendChild(el);
-          
-          setTimeout(() => {
-            if (el.parentNode) el.remove();
-          }, 1200);
+          setTimeout(() => el.remove(), 900);
         }
       }
 
@@ -1169,26 +1243,23 @@
         }
       }
 
-      document.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        createSmallFlowerBurst(e.clientX, e.clientY);
-        lastFlowerTime = Date.now();
-      });
-
-      document.addEventListener('mousemove', (e) => {
-        if (isDragging) {
-          handleDragMove(e.clientX, e.clientY);
-        }
-      });
-
-      document.addEventListener('mouseup', () => {
-        isDragging = false;
-      });
+      if (!REDUCE_FX) {
+        document.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          createSmallFlowerBurst(e.clientX, e.clientY);
+          lastFlowerTime = Date.now();
+        });
+        document.addEventListener('mousemove', (e) => {
+          if (isDragging) handleDragMove(e.clientX, e.clientY);
+        });
+        document.addEventListener('mouseup', () => { isDragging = false; });
+      }
 
       document.addEventListener('touchstart', (e) => {
         const touch = e.touches[0];
-        if (touch) {
-          isDragging = true;
+        if (!touch) return;
+        isDragging = true;
+        if (!REDUCE_FX) {
           createSmallFlowerBurst(touch.clientX, touch.clientY);
           lastFlowerTime = Date.now();
         }
@@ -1196,14 +1267,10 @@
 
       document.addEventListener('touchmove', (e) => {
         const touch = e.touches[0];
-        if (touch && isDragging) {
-          handleDragMove(touch.clientX, touch.clientY);
-        }
+        if (touch && isDragging && !REDUCE_FX) handleDragMove(touch.clientX, touch.clientY);
       }, { passive: true });
 
-      document.addEventListener('touchend', () => {
-        isDragging = false;
-      }, { passive: true });
+      document.addEventListener('touchend', () => { isDragging = false; }, { passive: true });
 
       // ---- Main logic ----
       const intro = document.getElementById('intro');
@@ -1228,37 +1295,68 @@
       const galleryVideo = gallerySection.querySelector('video');
       const scratchVideo = document.querySelector('.scratch-section video.bg-video');
       const dividers = document.querySelectorAll('.section-divider-overlay');
+      const allLoopVideos = [
+        ...Array.from(document.querySelectorAll('.section-video video')),
+        scratchVideo,
+        galleryVideo
+      ].filter(Boolean);
+
+      function pauseVideo(vid) {
+        if (!vid) return;
+        try { vid.pause(); } catch (_) {}
+      }
+
+      function playVideo(vid) {
+        if (!vid) return;
+        try {
+          if (vid.readyState < 2) vid.load();
+          const p = vid.play();
+          if (p && typeof p.catch === 'function') p.catch(() => {});
+        } catch (_) {}
+      }
+
+      function setActiveLoopVideo(activeVid) {
+        allLoopVideos.forEach(vid => {
+          if (vid === activeVid) playVideo(vid);
+          else pauseVideo(vid);
+        });
+      }
 
       // ---- Scratch Enhanced ----
       let scratchCtx, scratching = false;
-      let dpr = Math.min(devicePixelRatio || 1, 2);
+      let dpr = Math.min(devicePixelRatio || 1, REDUCE_FX ? 1.25 : 2);
       let flowerShowered = false;
       let scratchW, scratchH;
+      let lastScratchCheck = 0;
+      let lastParticleTime = 0;
 
       // ---- Golden Particles ----
       function createGoldenParticles(x, y, count = 6) {
+        if (REDUCE_FX) {
+          const now = Date.now();
+          if (now - lastParticleTime < 80) return;
+          lastParticleTime = now;
+          count = Math.min(count, 2);
+        }
         const colors = ['#f7d875', '#ffd700', '#b8913a', '#fff5d0', '#cfab66'];
         for (let i = 0; i < count; i++) {
           const particle = document.createElement('div');
           particle.className = 'golden-particle';
-          const size = 4 + Math.random() * 8;
+          const size = 4 + Math.random() * (REDUCE_FX ? 5 : 8);
           const angle = Math.random() * Math.PI * 2;
           const distance = 15 + Math.random() * 40;
-          const tx = Math.cos(angle) * distance;
-          const ty = Math.sin(angle) * distance - 15;
           particle.style.cssText = `
             left: ${x}px;
             top: ${y}px;
             width: ${size}px;
             height: ${size}px;
             background: radial-gradient(circle, ${colors[Math.floor(Math.random() * colors.length)]}, #b8913a);
-            box-shadow: 0 0 12px rgba(247,216,117,0.4);
-            --tx: ${tx}px;
-            --ty: ${ty}px;
-            animation-duration: ${0.5 + Math.random() * 0.4}s;
+            --tx: ${Math.cos(angle) * distance}px;
+            --ty: ${Math.sin(angle) * distance - 15}px;
+            animation-duration: ${0.45 + Math.random() * 0.3}s;
           `;
           document.body.appendChild(particle);
-          setTimeout(() => particle.remove(), 1200);
+          setTimeout(() => particle.remove(), 900);
         }
       }
 
@@ -1268,25 +1366,25 @@
         flowerShowered = true;
         completeOverlay.classList.add('show');
 
-        const showerFlowers = ['🌸', '🌺', '🌷', '🌹', '✨', '🌼', '🌸', '🌺'];
-        for (let i = 0; i < 35; i++) {
+        const showerFlowers = ['🌸', '🌺', '🌷', '🌹', '✨', '🌼'];
+        const total = REDUCE_FX ? 12 : 35;
+        for (let i = 0; i < total; i++) {
           setTimeout(() => {
             const el = document.createElement('div');
             el.className = 'flower-shower';
-            const flower = showerFlowers[Math.floor(Math.random() * showerFlowers.length)];
-            const size = 18 + Math.random() * 28;
-            el.textContent = flower;
+            const size = 18 + Math.random() * (REDUCE_FX ? 14 : 28);
+            el.textContent = showerFlowers[Math.floor(Math.random() * showerFlowers.length)];
             el.style.cssText = `
               left: ${Math.random() * 100}vw;
               top: -30px;
               --size: ${size}px;
-              --duration: ${3 + Math.random() * 2.5}s;
-              --delay: ${Math.random() * 1.5}s;
+              --duration: ${2.5 + Math.random() * 2}s;
+              --delay: ${Math.random() * 1}s;
               font-size: ${size}px;
             `;
             document.body.appendChild(el);
-            setTimeout(() => el.remove(), 6000);
-          }, i * 120);
+            setTimeout(() => el.remove(), 5000);
+          }, i * (REDUCE_FX ? 90 : 120));
         }
       }
 
@@ -1304,10 +1402,9 @@
         scratchCanvas.style.width = scratchW + 'px';
         scratchCanvas.style.height = scratchH + 'px';
 
-        scratchCtx = scratchCanvas.getContext('2d');
-        scratchCtx.scale(dpr, dpr);
+        scratchCtx = scratchCanvas.getContext('2d', { alpha: true, desynchronized: true });
+        scratchCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        // Gradient Background
         const grad = scratchCtx.createRadialGradient(scratchW/2, scratchH/2, 20, scratchW/2, scratchH/2, Math.max(scratchW, scratchH) * 0.7);
         grad.addColorStop(0, '#f0d080');
         grad.addColorStop(0.2, '#d4aa5a');
@@ -1317,8 +1414,8 @@
         scratchCtx.fillStyle = grad;
         scratchCtx.fillRect(0, 0, scratchW, scratchH);
 
-        // Decorative Sparks
-        for (let i = 0; i < 80; i++) {
+        const sparkCount = REDUCE_FX ? 20 : 80;
+        for (let i = 0; i < sparkCount; i++) {
           const x = Math.random() * scratchW;
           const y = Math.random() * scratchH;
           const size = 2 + Math.random() * 8;
@@ -1332,49 +1429,46 @@
           scratchCtx.fill();
         }
 
-        // Dots
-        for (let i = 0; i < 100; i++) {
+        const dotCount = REDUCE_FX ? 30 : 100;
+        for (let i = 0; i < dotCount; i++) {
           const x = Math.random() * scratchW;
           const y = Math.random() * scratchH;
           const r = 1 + Math.random() * 3;
-          const alpha = 0.08 + Math.random() * 0.2;
-          scratchCtx.fillStyle = `rgba(255, 215, 150, ${alpha})`;
+          scratchCtx.fillStyle = `rgba(255, 215, 150, ${0.08 + Math.random() * 0.2})`;
           scratchCtx.beginPath();
           scratchCtx.arc(x, y, r, 0, Math.PI * 2);
           scratchCtx.fill();
         }
 
-        // Swirl Lines
-        scratchCtx.strokeStyle = 'rgba(255, 215, 170, 0.06)';
-        scratchCtx.lineWidth = 1.5;
-        for (let i = 0; i < 20; i++) {
-          const x = Math.random() * scratchW;
-          const y = Math.random() * scratchH;
-          scratchCtx.beginPath();
-          scratchCtx.moveTo(x, y);
-          for (let j = 0; j < 8; j++) {
-            scratchCtx.quadraticCurveTo(
-              x + (Math.random() - 0.5) * 80,
-              y + (Math.random() - 0.5) * 40,
-              x + (Math.random() - 0.5) * 80,
-              y + (Math.random() - 0.5) * 40
-            );
+        if (!REDUCE_FX) {
+          scratchCtx.strokeStyle = 'rgba(255, 215, 170, 0.06)';
+          scratchCtx.lineWidth = 1.5;
+          for (let i = 0; i < 20; i++) {
+            const x = Math.random() * scratchW;
+            const y = Math.random() * scratchH;
+            scratchCtx.beginPath();
+            scratchCtx.moveTo(x, y);
+            for (let j = 0; j < 8; j++) {
+              scratchCtx.quadraticCurveTo(
+                x + (Math.random() - 0.5) * 80,
+                y + (Math.random() - 0.5) * 40,
+                x + (Math.random() - 0.5) * 80,
+                y + (Math.random() - 0.5) * 40
+              );
+            }
+            scratchCtx.stroke();
           }
-          scratchCtx.stroke();
         }
 
-        // Soft Overlay
         scratchCtx.fillStyle = 'rgba(180, 140, 70, 0.35)';
         scratchCtx.fillRect(0, 0, scratchW, scratchH);
 
-        // Glow Highlight
         const hl = scratchCtx.createRadialGradient(scratchW/2, scratchH/3, 10, scratchW/2, scratchH/3, scratchW * 0.6);
         hl.addColorStop(0, 'rgba(255, 240, 210, 0.10)');
         hl.addColorStop(1, 'rgba(255, 240, 210, 0)');
         scratchCtx.fillStyle = hl;
         scratchCtx.fillRect(0, 0, scratchW, scratchH);
 
-        // Hint Text
         scratchCtx.fillStyle = 'rgba(255, 240, 210, 0.13)';
         scratchCtx.font = '600 14px Vazirmatn, sans-serif';
         scratchCtx.textAlign = 'center';
@@ -1387,8 +1481,8 @@
       }
 
       // ---- Scratch At ----
-      const RADIUS = 12;
-      const DENSITY = 4;
+      const RADIUS = REDUCE_FX ? 16 : 12;
+      const DENSITY = REDUCE_FX ? 2 : 4;
 
       function scratchAt(x, y) {
         if (!scratchCtx) return;
@@ -1396,7 +1490,7 @@
         const cx = x - rect.left;
         const cy = y - rect.top;
 
-        createGoldenParticles(x, y, 4 + Math.floor(Math.random() * 4));
+        createGoldenParticles(x, y, REDUCE_FX ? 2 : (4 + Math.floor(Math.random() * 4)));
 
         for (let i = 0; i < DENSITY; i++) {
           const ox = (Math.random() - 0.5) * 8;
@@ -1411,18 +1505,25 @@
 
       // ---- Check Complete ----
       function checkScratchComplete() {
-        if (flowerShowered) return;
+        if (flowerShowered || !scratchCtx) return;
+        const now = Date.now();
+        if (now - lastScratchCheck < (REDUCE_FX ? 220 : 120)) return;
+        lastScratchCheck = now;
         try {
-          const imageData = scratchCtx.getImageData(0, 0, scratchCanvas.width, scratchCanvas.height);
+          // sample every Nth pixel for speed
+          const step = REDUCE_FX ? 32 : 16;
+          const { width, height } = scratchCanvas;
+          const imageData = scratchCtx.getImageData(0, 0, width, height);
           let transparent = 0;
-          const total = imageData.data.length / 4;
-          for (let i = 3; i < imageData.data.length; i += 4) {
-            if (imageData.data[i] === 0) transparent++;
+          let total = 0;
+          for (let y = 0; y < height; y += step) {
+            for (let x = 0; x < width; x += step) {
+              const i = (y * width + x) * 4 + 3;
+              total++;
+              if (imageData.data[i] === 0) transparent++;
+            }
           }
-          const percent = (transparent / total) * 100;
-          if (percent > 35) {
-            createFlowerShower();
-          }
+          if (total && (transparent / total) * 100 > 35) createFlowerShower();
         } catch (e) {}
       }
 
@@ -1481,15 +1582,7 @@
         introVideo.play().catch(() => {});
         tryPlayAudio();
         audioBtn.classList.add('show');
-        
-        setTimeout(() => {
-          videoSections.forEach(sec => {
-            const vid = sec.querySelector('video');
-            if (vid) vid.play().catch(() => {});
-          });
-          if (galleryVideo) galleryVideo.play().catch(() => {});
-          if (scratchVideo) scratchVideo.play().catch(() => {});
-        }, 500);
+        // ویدیوهای لوپ را اینجا همزمان پلی نکن — فقط وقتی در دید هستند
       }
 
       function tryPlayAudio() {
@@ -1526,8 +1619,17 @@
 
         setTimeout(() => {
           intro.classList.add('gone');
+          try { introVideo.pause(); } catch (_) {}
+          // آزاد کردن حافظه ویدیو اینترو بعد از رفتن
+          try {
+            introVideo.querySelectorAll('source').forEach(s => s.remove());
+            introVideo.removeAttribute('src');
+            introVideo.load();
+          } catch (_) {}
           observeSections();
           document.querySelector('#sec-hello')?.classList.add('in-view');
+          const firstVid = document.querySelector('#sec-hello video');
+          setActiveLoopVideo(firstVid);
         }, 1600);
       }
 
@@ -1561,9 +1663,20 @@
       function observeSections() {
         const obs = new IntersectionObserver(entries => {
           entries.forEach(e => {
-            if (e.isIntersecting) e.target.classList.add('in-view');
+            if (e.isIntersecting) {
+              e.target.classList.add('in-view');
+              const vid = e.target.tagName === 'VIDEO'
+                ? e.target
+                : e.target.querySelector('video');
+              if (vid && allLoopVideos.includes(vid)) setActiveLoopVideo(vid);
+            } else {
+              const vid = e.target.tagName === 'VIDEO'
+                ? e.target
+                : e.target.querySelector('video');
+              if (vid && allLoopVideos.includes(vid) && !vid.paused) pauseVideo(vid);
+            }
           });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.25, root: mainScroll });
         
         videoSections.forEach(s => obs.observe(s));
         obs.observe(document.getElementById('sec-scratch'));

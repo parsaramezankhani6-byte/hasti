@@ -422,7 +422,7 @@
       object-fit: cover;
       z-index: 0;
       opacity: 0;
-      transition: opacity 1.8s ease;
+      transition: opacity 0.55s ease;
       pointer-events: none;
     }
 
@@ -569,7 +569,7 @@
       object-fit: cover;
       z-index: 0;
       opacity: 0;
-      transition: opacity 1.8s ease;
+      transition: opacity 0.55s ease;
       pointer-events: none;
     }
 
@@ -829,7 +829,7 @@
       object-fit: cover;
       z-index: 0;
       opacity: 0;
-      transition: opacity 1.8s ease;
+      transition: opacity 0.55s ease;
       pointer-events: none;
     }
 
@@ -883,27 +883,26 @@
     .gallery-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      max-width: 330px;
+      gap: 4px;
+      max-width: 340px;
       margin: 0 auto;
       width: 100%;
     }
 
     .photo-item {
       position: relative;
-      border-radius: 8px;
-      overflow: visible;
+      border-radius: 6px;
+      overflow: hidden;
       background: transparent;
       box-shadow: none;
       aspect-ratio: 3/4;
       opacity: 0;
       transform: translateY(20px) scale(0.95);
-      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid transparent;
-      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 1px solid transparent;
+      transition: opacity 0.55s ease, transform 0.55s ease;
     }
 
     /* Shine Effect */
@@ -937,7 +936,7 @@
       height: 100%;
       object-fit: contain;
       display: block;
-      border-radius: 8px;
+      border-radius: 6px;
       background: transparent;
       pointer-events: none;
       -webkit-user-drag: none;
@@ -949,21 +948,21 @@
     .gallery-section.in-view .photo-item {
       opacity: 1;
       transform: translateY(0) scale(1);
-      box-shadow: 0 0 40px rgba(207, 171, 102, 0.1), 0 0 80px rgba(207, 171, 102, 0.03);
-      border-color: rgba(207, 171, 102, 0.15);
+      box-shadow: none;
+      border-color: rgba(207, 171, 102, 0.12);
     }
 
     .gallery-section.in-view .photo-item:nth-child(1) {
-      transition-delay: 0.15s;
+      transition-delay: 0.1s;
     }
     .gallery-section.in-view .photo-item:nth-child(2) {
-      transition-delay: 0.3s;
+      transition-delay: 0.18s;
     }
     .gallery-section.in-view .photo-item:nth-child(3) {
-      transition-delay: 0.45s;
+      transition-delay: 0.26s;
     }
     .gallery-section.in-view .photo-item:nth-child(4) {
-      transition-delay: 0.6s;
+      transition-delay: 0.34s;
     }
 
     .gallery-section.in-view .photo-item {
@@ -1035,16 +1034,6 @@
     #audio-btn svg { width: 20px; height: 20px; fill: white; }
 
     /* GPU / layout helpers */
-    #main-scroll {
-      contain: layout paint;
-    }
-    .section-video,
-    .scratch-section,
-    .gallery-section,
-    .section-divider-overlay {
-      content-visibility: auto;
-      contain-intrinsic-size: 100vw 80vh;
-    }
     img {
       max-width: 100%;
       height: auto;
@@ -1054,10 +1043,46 @@
     .gallery-section video {
       transform: translateZ(0);
       backface-visibility: hidden;
+      transition: opacity 0.55s ease;
     }
 
     /* موبایل: افکت‌های سنگین را کم کن */
     @media (max-width: 820px), (hover: none) and (pointer: coarse) {
+      /* نورانی شدن سبک‌تر — بدون clip-path سنگین */
+      #video-bloom,
+      #video-whiteout {
+        clip-path: none !important;
+        -webkit-clip-path: none !important;
+        mix-blend-mode: normal;
+        transform: translateZ(0) scale(1.2);
+        will-change: opacity;
+        transition: opacity 0.9s ease !important;
+      }
+      #video-bloom {
+        background: radial-gradient(
+          circle at 50% 48%,
+          rgba(255, 236, 190, 0.92) 0%,
+          rgba(255, 210, 120, 0.55) 35%,
+          rgba(255, 180, 80, 0.18) 62%,
+          transparent 78%
+        );
+      }
+      #video-whiteout {
+        background: radial-gradient(
+          circle at 50% 45%,
+          rgba(255, 250, 235, 0.96) 0%,
+          rgba(255, 236, 200, 0.75) 40%,
+          rgba(253, 244, 235, 0.35) 70%,
+          transparent 88%
+        );
+      }
+      #video-bloom.active,
+      #video-whiteout.active {
+        opacity: 1;
+        clip-path: none !important;
+        -webkit-clip-path: none !important;
+      }
+
       .seal-btn {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
@@ -1078,7 +1103,7 @@
       .photo-item {
         animation: none !important;
         filter: none !important;
-        transition: opacity 0.45s ease, transform 0.45s ease !important;
+        transition: opacity 0.4s ease, transform 0.4s ease !important;
       }
       .photo-item:nth-child(n) {
         animation: none !important;
@@ -1086,6 +1111,7 @@
       .intro-glow {
         animation: none !important;
         opacity: 0.55;
+        mix-blend-mode: normal;
       }
       .seal-ring,
       .seal-icon,
@@ -1100,6 +1126,10 @@
       }
       .flower-particle {
         will-change: auto;
+      }
+      .gallery-section.in-view .photo-item {
+        animation: none !important;
+        box-shadow: none;
       }
     }
 
@@ -1144,8 +1174,8 @@
 
     @media (max-width: 380px) {
       .gallery-grid {
-        gap: 8px;
-        max-width: 280px;
+        gap: 3px;
+        max-width: 300px;
       }
     }
   </style>
@@ -1286,16 +1316,18 @@
     (() => {
       const IS_MOBILE = window.matchMedia('(max-width: 820px), (hover: none) and (pointer: coarse)').matches
         || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      const REDUCE_FX = IS_MOBILE || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // افکت گل/خراش روی موبایل فعال بماند؛ فقط کمی سبک‌تر
+      const LIGHT_FX = IS_MOBILE;
 
       // ---- Flower Burst ----
       const flowers = ['🌸', '🌺', '🌷', '🌹', '🌼'];
       let lastFlowerTime = 0;
-      const FLOWER_INTERVAL = REDUCE_FX ? 110 : 40;
-      const FLOWER_COUNT_MAX = REDUCE_FX ? 2 : 4;
+      const FLOWER_INTERVAL = LIGHT_FX ? 70 : 40;
+      const FLOWER_COUNT_MAX = LIGHT_FX ? 3 : 4;
       
       function createSmallFlowerBurst(clientX, clientY) {
-        if (REDUCE_FX && Math.random() > 0.55) return;
+        if (REDUCE_MOTION) return;
         const container = document.getElementById('flowerBurstContainer');
         if (!container) return;
         const count = 1 + Math.floor(Math.random() * FLOWER_COUNT_MAX);
@@ -1305,7 +1337,7 @@
           el.className = 'flower-particle';
           el.textContent = flowers[Math.floor(Math.random() * flowers.length)];
           
-          const size = 10 + Math.random() * (REDUCE_FX ? 6 : 10);
+          const size = 10 + Math.random() * (LIGHT_FX ? 8 : 10);
           el.style.width = size + 'px';
           el.style.height = size + 'px';
           el.style.fontSize = size + 'px';
@@ -1334,31 +1366,29 @@
         }
       }
 
-      if (!REDUCE_FX) {
-        document.addEventListener('mousedown', (e) => {
-          isDragging = true;
-          createSmallFlowerBurst(e.clientX, e.clientY);
-          lastFlowerTime = Date.now();
-        });
-        document.addEventListener('mousemove', (e) => {
-          if (isDragging) handleDragMove(e.clientX, e.clientY);
-        });
-        document.addEventListener('mouseup', () => { isDragging = false; });
-      }
+      document.addEventListener('mousedown', (e) => {
+        if (REDUCE_MOTION) return;
+        isDragging = true;
+        createSmallFlowerBurst(e.clientX, e.clientY);
+        lastFlowerTime = Date.now();
+      });
+      document.addEventListener('mousemove', (e) => {
+        if (isDragging) handleDragMove(e.clientX, e.clientY);
+      });
+      document.addEventListener('mouseup', () => { isDragging = false; });
 
       document.addEventListener('touchstart', (e) => {
+        if (REDUCE_MOTION) return;
         const touch = e.touches[0];
         if (!touch) return;
         isDragging = true;
-        if (!REDUCE_FX) {
-          createSmallFlowerBurst(touch.clientX, touch.clientY);
-          lastFlowerTime = Date.now();
-        }
+        createSmallFlowerBurst(touch.clientX, touch.clientY);
+        lastFlowerTime = Date.now();
       }, { passive: true });
 
       document.addEventListener('touchmove', (e) => {
         const touch = e.touches[0];
-        if (touch && isDragging && !REDUCE_FX) handleDragMove(touch.clientX, touch.clientY);
+        if (touch && isDragging) handleDragMove(touch.clientX, touch.clientY);
       }, { passive: true });
 
       document.addEventListener('touchend', () => { isDragging = false; }, { passive: true });
@@ -1560,7 +1590,7 @@
 
       // ---- Scratch Enhanced ----
       let scratchCtx, scratching = false;
-      let dpr = Math.min(devicePixelRatio || 1, REDUCE_FX ? 1.25 : 2);
+      let dpr = Math.min(devicePixelRatio || 1, LIGHT_FX ? 1.25 : 2);
       let flowerShowered = false;
       let scratchW, scratchH;
       let lastScratchCheck = 0;
@@ -1568,7 +1598,7 @@
 
       // ---- Golden Particles ----
       function createGoldenParticles(x, y, count = 6) {
-        if (REDUCE_FX) {
+        if (LIGHT_FX) {
           const now = Date.now();
           if (now - lastParticleTime < 80) return;
           lastParticleTime = now;
@@ -1578,7 +1608,7 @@
         for (let i = 0; i < count; i++) {
           const particle = document.createElement('div');
           particle.className = 'golden-particle';
-          const size = 4 + Math.random() * (REDUCE_FX ? 5 : 8);
+          const size = 4 + Math.random() * (LIGHT_FX ? 5 : 8);
           const angle = Math.random() * Math.PI * 2;
           const distance = 15 + Math.random() * 40;
           particle.style.cssText = `
@@ -1603,12 +1633,12 @@
         completeOverlay.classList.add('show');
 
         const showerFlowers = ['🌸', '🌺', '🌷', '🌹', '✨', '🌼'];
-        const total = REDUCE_FX ? 12 : 35;
+        const total = LIGHT_FX ? 12 : 35;
         for (let i = 0; i < total; i++) {
           setTimeout(() => {
             const el = document.createElement('div');
             el.className = 'flower-shower';
-            const size = 18 + Math.random() * (REDUCE_FX ? 14 : 28);
+            const size = 18 + Math.random() * (LIGHT_FX ? 14 : 28);
             el.textContent = showerFlowers[Math.floor(Math.random() * showerFlowers.length)];
             el.style.cssText = `
               left: ${Math.random() * 100}vw;
@@ -1620,7 +1650,7 @@
             `;
             document.body.appendChild(el);
             setTimeout(() => el.remove(), 5000);
-          }, i * (REDUCE_FX ? 90 : 120));
+          }, i * (LIGHT_FX ? 90 : 120));
         }
       }
 
@@ -1650,7 +1680,7 @@
         scratchCtx.fillStyle = grad;
         scratchCtx.fillRect(0, 0, scratchW, scratchH);
 
-        const sparkCount = REDUCE_FX ? 20 : 80;
+        const sparkCount = LIGHT_FX ? 20 : 80;
         for (let i = 0; i < sparkCount; i++) {
           const x = Math.random() * scratchW;
           const y = Math.random() * scratchH;
@@ -1665,7 +1695,7 @@
           scratchCtx.fill();
         }
 
-        const dotCount = REDUCE_FX ? 30 : 100;
+        const dotCount = LIGHT_FX ? 30 : 100;
         for (let i = 0; i < dotCount; i++) {
           const x = Math.random() * scratchW;
           const y = Math.random() * scratchH;
@@ -1676,7 +1706,7 @@
           scratchCtx.fill();
         }
 
-        if (!REDUCE_FX) {
+        if (!LIGHT_FX) {
           scratchCtx.strokeStyle = 'rgba(255, 215, 170, 0.06)';
           scratchCtx.lineWidth = 1.5;
           for (let i = 0; i < 20; i++) {
@@ -1717,8 +1747,8 @@
       }
 
       // ---- Scratch At ----
-      const RADIUS = REDUCE_FX ? 16 : 12;
-      const DENSITY = REDUCE_FX ? 2 : 4;
+      const RADIUS = LIGHT_FX ? 16 : 12;
+      const DENSITY = LIGHT_FX ? 2 : 4;
 
       function scratchAt(x, y) {
         if (!scratchCtx) return;
@@ -1726,7 +1756,7 @@
         const cx = x - rect.left;
         const cy = y - rect.top;
 
-        createGoldenParticles(x, y, REDUCE_FX ? 2 : (4 + Math.floor(Math.random() * 4)));
+        createGoldenParticles(x, y, LIGHT_FX ? 2 : (4 + Math.floor(Math.random() * 4)));
 
         for (let i = 0; i < DENSITY; i++) {
           const ox = (Math.random() - 0.5) * 8;
@@ -1743,11 +1773,11 @@
       function checkScratchComplete() {
         if (flowerShowered || !scratchCtx) return;
         const now = Date.now();
-        if (now - lastScratchCheck < (REDUCE_FX ? 220 : 120)) return;
+        if (now - lastScratchCheck < (LIGHT_FX ? 220 : 120)) return;
         lastScratchCheck = now;
         try {
           // sample every Nth pixel for speed
-          const step = REDUCE_FX ? 32 : 16;
+          const step = LIGHT_FX ? 32 : 16;
           const { width, height } = scratchCanvas;
           const imageData = scratchCtx.getImageData(0, 0, width, height);
           let transparent = 0;
@@ -1832,17 +1862,20 @@
         if (bloomStarted) return;
         bloomStarted = true;
 
+        const bloomDelay = LIGHT_FX ? 1600 : 2000;
+        const finishDelay = LIGHT_FX ? 2300 : 2900;
+
         setTimeout(() => {
           videoBloom.classList.add('active');
-        }, 2000);
+        }, bloomDelay);
 
         setTimeout(() => {
           videoWhiteout.classList.add('active');
-        }, 2000);
+        }, bloomDelay);
 
         setTimeout(() => {
           finishIntro();
-        }, 2900);
+        }, finishDelay);
       }
 
       function finishIntro() {
@@ -1897,22 +1930,26 @@
       });
 
       function observeSections() {
+        // زودتر از رسیدن به بخش، ظاهر و ویدیو آماده شود
         const obs = new IntersectionObserver(entries => {
           entries.forEach(e => {
             if (e.isIntersecting) {
               e.target.classList.add('in-view');
-              const vid = e.target.tagName === 'VIDEO'
-                ? e.target
-                : e.target.querySelector('video');
+              const vid = e.target.querySelector('video');
               if (vid && allLoopVideos.includes(vid)) setActiveLoopVideo(vid);
-            } else {
-              const vid = e.target.tagName === 'VIDEO'
-                ? e.target
-                : e.target.querySelector('video');
+              if (e.target.id === 'sec-scratch') {
+                setTimeout(initScratch, 80);
+              }
+            } else if (e.intersectionRatio <= 0) {
+              const vid = e.target.querySelector('video');
               if (vid && allLoopVideos.includes(vid) && !vid.paused) pauseVideo(vid);
             }
           });
-        }, { threshold: 0.25, root: mainScroll });
+        }, {
+          threshold: [0, 0.01, 0.1],
+          root: mainScroll,
+          rootMargin: '90% 0px 90% 0px'
+        });
         
         videoSections.forEach(s => obs.observe(s));
         obs.observe(document.getElementById('sec-scratch'));
